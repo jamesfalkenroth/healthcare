@@ -1,0 +1,73 @@
+body{
+    display: grid;
+    grid-template-rows: 50px auto auto;
+    grid-template-areas: "header" "main_content" "footer";
+    background-color: rgb(243, 243, 243);
+    gap: 10px;
+}
+
+header{
+    grid-area: header;
+    justify-self: center;
+    align-self: center;
+    font-family:'Courier New', Courier, monospace
+}
+
+#footer{
+    grid-area: footer;
+}
+
+.main{
+    grid-area: main_content;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "content survey";
+    display: grid;
+}
+
+#contents{
+    grid-area: content;
+    display: grid;
+    grid-template-rows: 1fr 3fr; 
+    grid-template-areas: "buttonHome" "main_map"
+}
+
+#placeForRedButtons{
+    grid-area: redButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForYellowButtons{
+    grid-area: yellowButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForGreenButtons{
+    grid-area: greenButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForBlueButtons{
+    grid-area: blueButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForPurpleButtons{
+    grid-area: purpleButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#the_map{
+    height:80vh;
+    grid-area: main_map;
+}
+
+#theSurvey{
+    grid-area: survey;
+}
+
+#placeForButtons{
+    grid-area: buttonHome;
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-areas: "redButtons" "yellowButtons" "greenButtons" "blueButtons" "purpleButtons";
+}

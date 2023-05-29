@@ -1,1 +1,48 @@
-hello
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Educational Attainment</title>
+        <!-- hint: remember to change your page title! -->
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet" href="styles/style.css">
+
+        <!-- Leaflet's css-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+        <!-- Leaflet's JavaScript-->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <!-- Papa Parse -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <!-- Insert Menu Bar Here-->
+
+            <!-- Page Title -->
+            <h1>Federally Qualified Health Centers (FQHCs) </h1> <!--update title-->
+            <h2>Insert Description Here</h2>
+        </header>
+
+        <div class="main">
+            <div id="contents">
+                <div id="the_map"></div>
+                <div id="sidebar">
+                    <h1>Take Our Survey!</h1>
+                    <div id="survey_button"></div>
+                    <div id="about_fqhcs"></div>
+                    <div id="stories"></div>
+                </div>
+            </div>
+            <div id="theSurvey">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc91Dd2_jOYCU3-ZxTiKtgPwV1M_T3_mWMcWAF0wUikh_Yk8A/viewform?embedded=true" width="640" height="844" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+        </div>
+        <div id="footer">
+            Copyright(2023)
+        </div>
+        <script src="js/init.js"></script>
+    </body>
+</html>
