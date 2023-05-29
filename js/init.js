@@ -94,7 +94,7 @@ function createButtons(lat,lng,title,color){
     }
 }
 
-const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR76ajamkW33LOYWPvm8LSLIVeD3td1RYaT_FfiYx2t0sVdPuob-rRLpJ3daOd2J5Aq3AAUdGcv9rg1/pub?output=csv"
+const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEcGaieNJJaf1Fkh0pwp8hvhnHYJJzV2TnCXHU8pBEWveti9_LuiZFZ7oAytgNcy0mrDJLKLs1HU-j/pub?output=csv"
 
 function loadData(url){
     Papa.parse(url, {
