@@ -21,7 +21,7 @@ header{
 
 .main{
     grid-area: main_content;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.75fr 1fr;
     grid-template-areas: "main_map content";
     display: grid;
 }
