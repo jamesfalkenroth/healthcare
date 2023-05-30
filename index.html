@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Educational Attainment</title>
+        <title>FQHC Stories</title>
         <!-- hint: remember to change your page title! -->
         <meta charset="utf-8" />
         <link rel="shortcut icon" href="#">
@@ -23,25 +23,27 @@
 
             <!-- Page Title -->
             <h1>Federally Qualified Health Centers (FQHCs) </h1> <!--update title-->
-            <h2>Insert Description Here</h2>
+            <p>Insert description here</p>
         </header>
 
         <div class="main">
+            <div id="the_map"></div> 
             <div id="contents">
-                <div id="the_map"></div>
                 <div id="sidebar">
-                    <h1>Take Our Survey!</h1>
-                    <div id="survey_button"></div>
-                    <div id="about_fqhcs"></div>
-                    <div id="stories"></div>
+                    <h2>Take Our Survey!</h2>
+                    <div id="survey_button">
+                        <button onclick="showSurvey()">Show/Hide Survey</button>
+                    </div>
+                    <div id="theSurvey">
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfUnx5si5g-bz0nCHcXjXOBrcFNm0RvnTi1q4V9_GMs6p3SWQ/viewform?embedded=true" width="100%" height="600px" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                    </div>
+                    <div id="about_fqhcs">Insert "About FQHCs" Here</div>
+                    <div id="stories">Insert stories here</div>
                 </div>
-            </div>
-            <div id="theSurvey">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfUnx5si5g-bz0nCHcXjXOBrcFNm0RvnTi1q4V9_GMs6p3SWQ/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-            </div>
+            </div>  
         </div>
         <div id="footer">
-            Copyright(2023)
+            © 2023
         </div>
         <script src="js/init.js"></script>
     </body>

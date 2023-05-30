@@ -1,6 +1,6 @@
 body{
     display: grid;
-    grid-template-rows: 50px auto auto;
+    grid-template-rows: 100px auto auto;
     grid-template-areas: "header" "main_content" "footer";
     background-color: rgb(243, 243, 243);
     gap: 10px;
@@ -10,25 +10,70 @@ header{
     grid-area: header;
     justify-self: center;
     align-self: center;
-    font-family:'Courier New', Courier, monospace
+    font-family: sans-serif;
 }
 
 #footer{
     grid-area: footer;
+    text-align: center;
+    font-family: sans-serif;
 }
 
 .main{
     grid-area: main_content;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "content survey";
+    grid-template-areas: "main_map content";
     display: grid;
 }
 
-#contents{
+#the_map{
+    height:80vh;
+    grid-area: main_map;
+}
+
+#contents {
     grid-area: content;
     display: grid;
     grid-template-rows: 1fr 3fr; 
-    grid-template-areas: "buttonHome" "main_map"
+    grid-template-areas: "sidebar" 
+}
+
+#sidebar {
+    justify-self: center;
+    font-family: sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+#theSurvey{
+    grid-area: survey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#survey_button {
+    grid-area: surveybutton;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#about_fqhcs {
+    grid-area: aboutfqhcs;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#stories {
+    grid-area: stories;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#placeForButtons{
+    grid-area: buttonHome;
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-areas: "redButtons" "yellowButtons" "greenButtons" "blueButtons" "purpleButtons";
 }
 
 #placeForRedButtons{
@@ -54,20 +99,4 @@ header{
 #placeForPurpleButtons{
     grid-area: purpleButtons;
     grid-template-columns: repeat(2, 1fr);
-}
-
-#the_map{
-    height:80vh;
-    grid-area: main_map;
-}
-
-#theSurvey{
-    grid-area: survey;
-}
-
-#placeForButtons{
-    grid-area: buttonHome;
-    display:grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-areas: "redButtons" "yellowButtons" "greenButtons" "blueButtons" "purpleButtons";
 }

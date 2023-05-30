@@ -113,3 +113,14 @@ function processData(results){
 }
 
 loadData(dataUrl)
+
+document.getElementById("theSurvey").style.display = "none";
+
+function showSurvey() {
+    var survey = document.getElementById("theSurvey");
+    if (survey.style.display === "none") {
+      survey.style.display = "block";
+    } else {
+      survey.style.display = "none";
+    }
+}
