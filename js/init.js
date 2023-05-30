@@ -124,3 +124,49 @@ function showSurvey() {
       survey.style.display = "none";
     }
 }
+
+//function for clicking on polygons
+function onEachFeature(feature, layer) {
+    console.log(feature.properties)
+    if (feature.properties.values) {
+        //count the values within the polygon by using .length on the values array created from turf.js collect
+        let count = feature.properties.values.length
+        console.log(count) // see what the count is on click
+        let text = count.toString() // convert it to a string
+        layer.bindPopup(text); //bind the pop up to the number
+    }
+}
+
+// new function to get the boundary layer and add data to it with turf.js
+function getBoundary(layer){
+    fetch(layer)
+    .then(response => {
+        return response.json();
+        })
+    .then(data =>{
+                //set the boundary to data
+                boundary = data
+
+                // run the turf collect geoprocessing
+                collected = turf.collect(boundary, thePoints, 'speakEnglish', 'values');
+                // just for fun, you can make buffers instead of the collect too:
+                // collected = turf.buffer(thePoints, 50,{units:'miles'});
+                console.log(collected.features)
+
+                // here is the geoJson of the `collected` result:
+                L.geoJson(collected,{onEachFeature: onEachFeature,style:function(feature)
+                {
+                    console.log(feature)
+                    if (feature.properties.values.length > 0) {
+                        return {color: "#ff0000",stroke: false};
+                    }
+                    else{
+                        // make the polygon gray and blend in with basemap if it doesn't have any values
+                        return{opacity:0,color:"#efefef" }
+                    }
+                }
+                // add the geojson to the map
+                    }).addTo(map)
+        }
+    )   
+}
