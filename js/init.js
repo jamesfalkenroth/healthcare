@@ -40,7 +40,6 @@ let circleOptions = {
 
 // for coloring the polygon
 function getStyles(data){
-    console.log(data)
     let myStyle = {
         "color": "#ff7800",
         "weight": 1,
@@ -91,9 +90,7 @@ function loadData(url){
 }
 
 function processData(results){
-    console.log(results)
     results.data.forEach(data => {
-        console.log(data)
         addMarker(data)
     })
     many.addTo(map) // add our layers after markers have been made
@@ -127,13 +124,13 @@ function showSurvey() {
 
 // function for clicking on polygons
 function onEachFeature(feature, layer) {
-    console.log(feature.properties)
     if (feature.properties.values) {
         // count the values within the polygon by using .length on the values array created from turf.js collect
-        let count = feature.properties.values.length
-        console.log(count) // see what the count is on click
-        let text = count.toString() // convert it to a string
-        layer.bindPopup(text); //bind the pop up to the number
+        let percentage = getPercentage(feature)*100;
+        let text = percentage.toString() + "%"; // convert it to a string
+        if(feature.properties.values.length>0) {
+            layer.bindPopup(text); //bind the pop up to the number
+        }
     }
 }
 
@@ -151,22 +148,41 @@ function getBoundary(layer){
                 collected = turf.collect(boundary, thePoints, 'howMany', 'values');
                 // just for fun, you can make buffers instead of the collect too:
                 // collected = turf.buffer(thePoints, 50,{units:'miles'});
-                console.log(collected.features)
 
                 // here is the geoJson of the `collected` result:
                 L.geoJson(collected,{onEachFeature: onEachFeature,style:function(feature)
                 {
-                    console.log(feature)
                     if (feature.properties.values.length > 0) {
-                        return {color: "#ff0000",stroke: false};
+                        if(getPercentage(feature)>0.5){
+                            return {color: "Blue",stroke: true};
+                        }
+                        else{
+                            return {color: "LightSkyBlue",stroke: true};
+                        }
                     }
                     else{
                         // make the polygon gray and blend in with basemap if it doesn't have any values
-                        return{opacity:0,color:"#efefef" }
+                        return{opacity:0,color:"#efefef"}
                     }
                 }
                 // add the geojson to the map
                     }).addTo(map)
         }
     )   
+}
+
+function getPercentage(feature){
+    let user = 0;
+    let nonUser = 0;
+    for(i=0; i<feature.properties.values.length; i++){
+        console.log(feature.properties.values[i])
+        if(feature.properties.values[i]=='Many' || feature.properties.values[i]=='A few') {
+            user++;
+        }
+        if(feature.properties.values[i]=='None' || feature.properties.values[i]=='Unsure/Do not know') {
+            nonUser++;
+        }
+    }
+    let percentage = user/(user+nonUser);
+    return percentage;
 }
