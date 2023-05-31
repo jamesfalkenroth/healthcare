@@ -4,93 +4,43 @@ let mapOptions = {'center': [34.0709,-118.444],'zoom':10}
 // use the variables
 const map = L.map('the_map').setView(mapOptions.center, mapOptions.zoom);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+let Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+	maxZoom: 16
+});
+
+Esri_WorldGrayCanvas.addTo(map);
 
 function addMarker(data){
     // console.log(data)
     // these are the names of our lat/long fields in the google sheets:
-    if(data["What is your highest level of educational attainment?"] == "Bachelor's Degree (B.S., B.A., etc.)") {
+    if(data["How many FQHCs have you used before in your primary area of residence?"] == "Many") {
         L.circleMarker([data.lat,data.lng],{
-            radius: 15,
+            radius: 10,
             color: 'green'
-        }).addTo(map).bindPopup(`<h2>${data['What is your hometown?']}</h2><h3>${data['What is your highest level of educational attainment?']}</h3>`)
-        createButtons(data.lat,data.lng,data['What is your hometown?'],'green')
+        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
         return
     }
-    else if(data["What is your highest level of educational attainment?"] == "No High School Degree") {
+    else if(data["How many FQHCs have you used before in your primary area of residence?"] == "A few") {
         L.circleMarker([data.lat,data.lng],{
-            radius: 15,
-            color: 'red'
-        }).addTo(map).bindPopup(`<h2>${data['What is your hometown?']}</h2><h3>${data['What is your highest level of educational attainment?']}</h3>`)
-        createButtons(data.lat,data.lng,data['What is your hometown?'],'red')
-        return
-    }
-    else if(data["What is your highest level of educational attainment?"] == "High School Degree") {
-        L.circleMarker([data.lat,data.lng],{
-            radius: 15,
+            radius: 10,
             color: 'yellow'
-        }).addTo(map).bindPopup(`<h2>${data['What is your hometown?']}</h2><h3>${data['What is your highest level of educational attainment?']}</h3>`)
-        createButtons(data.lat,data.lng,data['What is your hometown?'],'yellow')
+        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
         return
     }
-    else if(data["What is your highest level of educational attainment?"] == "Graduate Degree") {
+    else if(data["How many FQHCs have you used before in your primary area of residence?"] == "None") {
         L.circleMarker([data.lat,data.lng],{
-            radius: 15,
-            color: 'blue'
-        }).addTo(map).bindPopup(`<h2>${data['What is your hometown?']}</h2><h3>${data['What is your highest level of educational attainment?']}</h3>`)
-        createButtons(data.lat,data.lng,data['What is your hometown?'],'blue')
+            radius: 10,
+            color: 'red'
+        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
         return
     }
-    else if(data["What is your highest level of educational attainment?"] == "PhD or above") {
+    else {
         L.circleMarker([data.lat,data.lng],{
-            radius: 15,
-            color: 'purple'
-        }).addTo(map).bindPopup(`<h2>${data['What is your hometown?']}</h2><h3>${data['What is your highest level of educational attainment?']}</h3>`)
-        createButtons(data.lat,data.lng,data['What is your hometown?'],'purple')
+            radius: 10,
+            color: 'gray'
+        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
         return
-    }
-}
-
-function createButtons(lat,lng,title,color){
-    const newButton = document.createElement("button"); // adds a new button
-    newButton.id = "button"+title; // gives the button a unique id
-    newButton.innerHTML = title; // gives the button a title
-    newButton.setAttribute("lat",lat); // sets the latitude 
-    newButton.setAttribute("lng",lng); // sets the longitude 
-    newButton.addEventListener('click', function(){
-        map.flyTo([lat,lng]); //this is the flyTo from Leaflet
-    })
-    if(color=='red'){
-        newButton.style.color='red';
-        newButton.style.background='white';
-        const spaceForButtons = document.getElementById('placeForRedButtons');
-        spaceForButtons.appendChild(newButton);//this adds the button to our page.
-    }
-    else if(color=='green'){
-        newButton.style.color='green';
-        newButton.style.background='white';
-        const spaceForButtons = document.getElementById('placeForGreenButtons')
-        spaceForButtons.appendChild(newButton);//this adds the button to our page.
-    }
-    else if(color=='blue'){
-        newButton.style.color='blue';
-        newButton.style.background='white';
-        const spaceForButtons = document.getElementById('placeForBlueButtons')
-        spaceForButtons.appendChild(newButton);//this adds the button to our page.
-    }
-    else if(color=='purple'){
-        newButton.style.color='purple';
-        newButton.style.background='white';
-        const spaceForButtons = document.getElementById('placeForPurpleButtons')
-        spaceForButtons.appendChild(newButton);//this adds the button to our page.
-    }
-    else if(color=='yellow'){
-        newButton.style.color='gold';
-        newButton.style.background='white';
-        const spaceForButtons = document.getElementById('placeForYellowButtons')
-        spaceForButtons.appendChild(newButton);//this adds the button to our page.
     }
 }
 
@@ -114,8 +64,10 @@ function processData(results){
 
 loadData(dataUrl)
 
+//sets survey to invisible
 document.getElementById("theSurvey").style.display = "none";
 
+//function to hide and show the survey with a button
 function showSurvey() {
     var survey = document.getElementById("theSurvey");
     if (survey.style.display === "none") {

@@ -57,12 +57,6 @@ header{
     margin-bottom: 10px;
 }
 
-#about_fqhcs {
-    grid-area: aboutfqhcs;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 #stories {
     grid-area: stories;
     margin-top: 10px;
