@@ -1,9 +1,20 @@
 // declare variables
 let mapOptions = {'center': [34.0709,-118.444],'zoom':10}
 
+const boundaryLayer = "ca_zipcodes.geojson"
+let boundary; // place holder for the data
+let collected; // variable for turf.js collected points 
+let allPoints = []; // array for all the data points
+
+let many = L.featureGroup();
+let aFew = L.featureGroup();
+let none = L.featureGroup();
+let unsure = L.featureGroup();
+
 // use the variables
 const map = L.map('the_map').setView(mapOptions.center, mapOptions.zoom);
 
+// set basemap
 let Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
 	maxZoom: 16
@@ -11,38 +22,63 @@ let Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/r
 
 Esri_WorldGrayCanvas.addTo(map);
 
+let layers = {
+	"Many used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='green' /></svg>": many,
+	"A few used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": aFew,
+    "None used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": none,
+    "Unsure how many used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": unsure
+}
+
+let circleOptions = {
+    radius: 4,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+// for coloring the polygon
+function getStyles(data){
+    console.log(data)
+    let myStyle = {
+        "color": "#ff7800",
+        "weight": 1,
+        "opacity": .0,
+        "stroke": 0.5
+    };
+    if (data.properties.values.length > 0){
+        myStyle.opacity = 0
+        
+    }
+    return myStyle
+}
+
 function addMarker(data){
-    // console.log(data)
-    // these are the names of our lat/long fields in the google sheets:
-    if(data["How many FQHCs have you used before in your primary area of residence?"] == "Many") {
-        L.circleMarker([data.lat,data.lng],{
-            radius: 10,
-            color: 'green'
-        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
-        return
+    // this is the value that will be incremented
+    let howMany = data['How many FQHCs have you used before in your primary area of residence?']
+    // create the turfJS point
+    let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{howMany})
+    // put all the turfJS points into `allPoints`
+    allPoints.push(thisPoint)
+    if(data['How many FQHCs have you used before in your primary area of residence?'] == "Many"){
+        circleOptions.fillColor = "green"
+        many.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>Many used</h2>`))
+        }
+    else if(data['How many FQHCs have you used before in your primary area of residence?'] == "A few"){
+        circleOptions.fillColor = "yellow"
+        aFew.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>A few used</h2>`))
     }
-    else if(data["How many FQHCs have you used before in your primary area of residence?"] == "A few") {
-        L.circleMarker([data.lat,data.lng],{
-            radius: 10,
-            color: 'yellow'
-        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
-        return
-    }
-    else if(data["How many FQHCs have you used before in your primary area of residence?"] == "None") {
-        L.circleMarker([data.lat,data.lng],{
-            radius: 10,
-            color: 'red'
-        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
-        return
+    else if(data['How many FQHCs have you used before in your primary area of residence?'] == "None"){
+        circleOptions.fillColor = "red"
+        none.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>None used</h2>`))
     }
     else {
-        L.circleMarker([data.lat,data.lng],{
-            radius: 10,
-            color: 'gray'
-        }).addTo(map).bindPopup(`<h2>${data['Where is your primary zip code of residence?']}</h2><h3>${data["How many FQHCs have you used before in your primary area of residence?"]}</h3>`)
-        return
+        circleOptions.fillColor = "gray"
+        unsure.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>Unsure how many used</h2>`))
     }
-}
+    return data
+};
 
 const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSEcGaieNJJaf1Fkh0pwp8hvhnHYJJzV2TnCXHU8pBEWveti9_LuiZFZ7oAytgNcy0mrDJLKLs1HU-j/pub?output=csv"
 
@@ -60,14 +96,26 @@ function processData(results){
         console.log(data)
         addMarker(data)
     })
+    many.addTo(map) // add our layers after markers have been made
+    aFew.addTo(map) // add our layers after markers have been made  
+    none.addTo(map) // add our layers after markers have been made
+    unsure.addTo(map) // add our layers after markers have been made
+    let allLayers = L.featureGroup([many,aFew,none,unsure]);
+    map.fitBounds(allLayers.getBounds());
+
+    // step 1: turn allPoints into a turf.js featureCollection
+    thePoints = turf.featureCollection(allPoints)
+
+    // step 2: run the spatial analysis
+    getBoundary(boundaryLayer)
 }
 
 loadData(dataUrl)
 
-//sets survey to invisible
+// sets survey to invisible
 document.getElementById("theSurvey").style.display = "none";
 
-//function to hide and show the survey with a button
+// function to hide and show the survey with a button
 function showSurvey() {
     var survey = document.getElementById("theSurvey");
     if (survey.style.display === "none") {
@@ -77,11 +125,11 @@ function showSurvey() {
     }
 }
 
-//function for clicking on polygons
+// function for clicking on polygons
 function onEachFeature(feature, layer) {
     console.log(feature.properties)
     if (feature.properties.values) {
-        //count the values within the polygon by using .length on the values array created from turf.js collect
+        // count the values within the polygon by using .length on the values array created from turf.js collect
         let count = feature.properties.values.length
         console.log(count) // see what the count is on click
         let text = count.toString() // convert it to a string
@@ -100,7 +148,7 @@ function getBoundary(layer){
                 boundary = data
 
                 // run the turf collect geoprocessing
-                collected = turf.collect(boundary, thePoints, 'speakEnglish', 'values');
+                collected = turf.collect(boundary, thePoints, 'howMany', 'values');
                 // just for fun, you can make buffers instead of the collect too:
                 // collected = turf.buffer(thePoints, 50,{units:'miles'});
                 console.log(collected.features)
