@@ -55,6 +55,15 @@ function getStyles(data){
     return myStyle
 }
 
+function createStory(story, story2) {
+    if(story.length>5) {
+        document.getElementById("stories1").innerHTML += `<br/><br/>${story}`
+    }
+    if(story2.length>5){
+        document.getElementById("stories2").innerHTML += `<br/><br/>${story2}`
+    }
+}
+
 function addMarker(data){
     // this is the value that will be incremented
     let howMany = data['How many FQHCs have you used before in your primary area of residence?']
@@ -62,6 +71,10 @@ function addMarker(data){
     let income = data['Are you from a low-income household?']
     let story = data['If applicable, what was your experience in using the FQHCs in your primary area of residence?']
     let story2 = data['Do you feel your access to health care has impacted your usage or awareness of FQHCs?']
+
+    if(story2 || story) {
+        createStory(story, story2);
+    }
     // create the turfJS point
     dataArray.push([howMany, insurance, income, story, story2])
     let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{index})
