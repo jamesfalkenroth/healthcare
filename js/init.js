@@ -60,8 +60,10 @@ function addMarker(data){
     let howMany = data['How many FQHCs have you used before in your primary area of residence?']
     let insurance = data['Do you have health insurance?']
     let income = data['Are you from a low-income household?']
+    let story = data['If applicable, what was your experience in using the FQHCs in your primary area of residence?']
+    let story2 = data['Do you feel your access to health care has impacted your usage or awareness of FQHCs?']
     // create the turfJS point
-    dataArray.push([howMany, insurance, income])
+    dataArray.push([howMany, insurance, income, story, story2])
     let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{index})
     index++;
     // put all the turfJS points into `allPoints`
@@ -144,7 +146,7 @@ function onEachFeature(feature, layer) {
 
         let name = feature.properties.zcta;
         if(feature.properties.values.length>0) {
-            layer.bindPopup(`<strong>${name}</strong>\nFQHC Usage Rate: ${text}\nLow Income: ${incomeText}\nWithout Health Insurance: ${insureText}`); //bind the pop up to the number
+            layer.bindPopup(`<strong>${name}</strong><br/>FQHC Usage Rate: ${text}<br/>Low Income: ${incomeText}<br/>Without Health Insurance: ${insureText}`); //bind the pop up to the number
         }
     }
 }
