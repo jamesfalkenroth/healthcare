@@ -1,6 +1,6 @@
 body{
     display: grid;
-    grid-template-rows: 100px auto auto;
+    grid-template-rows: 200px auto auto;
     grid-template-areas: "header" "main_content" "footer";
     background-color: rgb(243, 243, 243);
     gap: 10px;
@@ -11,12 +11,21 @@ header{
     justify-self: center;
     align-self: center;
     font-family: sans-serif;
+    height: 25vh;
+    font-size:small;
+    text-align: center;
+    background-color: aqua;
+}
+
+#description{
+    text-align: center;
 }
 
 #footer{
     grid-area: footer;
-    text-align: center;
+    text-align: right;
     font-family: sans-serif;
+    font-size: smaller;
 }
 
 .main{
@@ -27,7 +36,7 @@ header{
 }
 
 #the_map{
-    height:80vh;
+    height:70vh;
     grid-area: main_map;
 }
 
