@@ -1,7 +1,7 @@
 // declare variables
 let mapOptions = {'center': [34.0709,-118.444],'zoom':10}
 
-const boundaryLayer = "ca_zipcodes.geojson"
+const boundaryLayer = "us_counties.geojson"
 let boundary; // place holder for the data
 let collected; // variable for turf.js collected points 
 let allPoints = []; // array for all the data points
@@ -126,10 +126,11 @@ function showSurvey() {
 function onEachFeature(feature, layer) {
     if (feature.properties.values) {
         // count the values within the polygon by using .length on the values array created from turf.js collect
-        let percentage = getPercentage(feature)*100;
+        let percentage = Math.round(getPercentage(feature)*100);
         let text = percentage.toString() + "%"; // convert it to a string
+        let name = feature.properties.NAME;
         if(feature.properties.values.length>0) {
-            layer.bindPopup(text); //bind the pop up to the number
+            layer.bindPopup(`<strong>${name}</strong>\nFQHC Usage Rate: ${text}`); //bind the pop up to the number
         }
     }
 }
