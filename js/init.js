@@ -1,7 +1,9 @@
 // declare variables
 let mapOptions = {'center': [34.0709,-118.444],'zoom':10}
+let index = 0;
+let dataArray = [];
 
-const boundaryLayer = "us_counties.geojson"
+const boundaryLayer ="ca_zipcodes.geojson"
 let boundary; // place holder for the data
 let collected; // variable for turf.js collected points 
 let allPoints = []; // array for all the data points
@@ -34,8 +36,8 @@ let circleOptions = {
     fillColor: "#ff7800",
     color: "#000",
     weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
+    opacity: 0,
+    fillOpacity: 0
 };
 
 // for coloring the polygon
@@ -56,8 +58,12 @@ function getStyles(data){
 function addMarker(data){
     // this is the value that will be incremented
     let howMany = data['How many FQHCs have you used before in your primary area of residence?']
+    let insurance = data['Do you have health insurance?']
+    let income = data['Are you from a low-income household?']
     // create the turfJS point
-    let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{howMany})
+    dataArray.push([howMany, insurance, income])
+    let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{index})
+    index++;
     // put all the turfJS points into `allPoints`
     allPoints.push(thisPoint)
     if(data['How many FQHCs have you used before in your primary area of residence?'] == "Many"){
@@ -125,12 +131,20 @@ function showSurvey() {
 // function for clicking on polygons
 function onEachFeature(feature, layer) {
     if (feature.properties.values) {
+        let percentages = getPercentage(feature)
         // count the values within the polygon by using .length on the values array created from turf.js collect
-        let percentage = Math.round(getPercentage(feature)*100);
-        let text = percentage.toString() + "%"; // convert it to a string
-        let name = feature.properties.NAME;
+        let awarePerc = Math.round(percentages[0]*100);
+        let lowIncPerc = Math.round(percentages[1]*100);
+        let uninsuredPerc = Math.round(percentages[2]*100);
+
+
+        let text = awarePerc.toString() + "%"; // convert it to a string
+        let incomeText = lowIncPerc.toString() + "%";
+        let insureText = uninsuredPerc.toString() + "%";
+
+        let name = feature.properties.zcta;
         if(feature.properties.values.length>0) {
-            layer.bindPopup(`<strong>${name}</strong>\nFQHC Usage Rate: ${text}`); //bind the pop up to the number
+            layer.bindPopup(`<strong>${name}</strong>\nFQHC Usage Rate: ${text}\nLow Income: ${incomeText}\nWithout Health Insurance: ${insureText}`); //bind the pop up to the number
         }
     }
 }
@@ -146,7 +160,7 @@ function getBoundary(layer){
                 boundary = data
 
                 // run the turf collect geoprocessing
-                collected = turf.collect(boundary, thePoints, 'howMany', 'values');
+                collected = turf.collect(boundary, thePoints, 'index', 'values');
                 // just for fun, you can make buffers instead of the collect too:
                 // collected = turf.buffer(thePoints, 50,{units:'miles'});
 
@@ -154,11 +168,12 @@ function getBoundary(layer){
                 L.geoJson(collected,{onEachFeature: onEachFeature,style:function(feature)
                 {
                     if (feature.properties.values.length > 0) {
-                        if(getPercentage(feature)>0.5){
-                            return {color: "Blue",stroke: true};
+                        let percent = getPercentage(feature)
+                        if(percent[0]>0.5){
+                            return {color: "Blue",stroke: true, fillOpacity:0.5};
                         }
                         else{
-                            return {color: "LightSkyBlue",stroke: true};
+                            return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
                         }
                     }
                     else{
@@ -175,15 +190,39 @@ function getBoundary(layer){
 function getPercentage(feature){
     let user = 0;
     let nonUser = 0;
+    let lowIncome = 0;
+    let notLowIncome = 0;
+    let insured = 0;
+    let uninsured = 0;
     for(i=0; i<feature.properties.values.length; i++){
-        console.log(feature.properties.values[i])
-        if(feature.properties.values[i]=='Many' || feature.properties.values[i]=='A few') {
+        console.log(feature.properties);
+        value = dataArray[feature.properties.values[i]][0];
+
+        if(value=='Many' || value=='A few') {
             user++;
+            console.log(dataArray[feature.properties.values[i]][0])
         }
-        if(feature.properties.values[i]=='None' || feature.properties.values[i]=='Unsure/Do not know') {
+        else if(value=='None' || value=='Unsure/Do not know') {
             nonUser++;
+            console.log(dataArray[feature.properties.values[i]][0])
+        }
+
+        insuranceStatus = dataArray[feature.properties.values[i]][1]
+        if(insuranceStatus=='Yes'){
+            insured++;
+        }
+        else if(insuranceStatus=='No'){
+            uninsured++;
+        }
+
+        incomeStatus = dataArray[feature.properties.values[i]][2]
+        if(incomeStatus=='Yes'){
+            lowIncome++;
+        }
+        else if(incomeStatus=='No'){
+            notLowIncome++;
         }
     }
-    let percentage = user/(user+nonUser);
+    let percentage = [user/(user+nonUser),lowIncome/(lowIncome+notLowIncome),uninsured/(insured+uninsured)];
     return percentage;
 }
