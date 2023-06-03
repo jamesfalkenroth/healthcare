@@ -17,9 +17,7 @@ header{
     margin-bottom: 30px;
 }
 
-#title{
-    background-color: rgb(145, 213, 255);
-}
+
 #description{
     text-align: center;
     font-size:small;
@@ -42,7 +40,7 @@ header{
 }
 
 #the_map{
-    height:80vh;
+    height:70vh;
     grid-area: main_map;
 }
 
@@ -58,7 +56,6 @@ header{
     font-family: sans-serif;
     width: 100%;
     text-align: center;
-    background-color: rgb(145, 213, 255);
 }
 
 #theSurvey{
@@ -77,18 +74,36 @@ header{
     grid-area: stories;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 20px;
-    margin-left: 20px;
 }
 
-#stories1{
-    text-align: left;
+#placeForButtons{
+    grid-area: buttonHome;
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-areas: "redButtons" "yellowButtons" "greenButtons" "blueButtons" "purpleButtons";
 }
 
-#stories2{
-    text-align: left;
+#placeForRedButtons{
+    grid-area: redButtons;
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.text{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+#placeForYellowButtons{
+    grid-area: yellowButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForGreenButtons{
+    grid-area: greenButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForBlueButtons{
+    grid-area: blueButtons;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#placeForPurpleButtons{
+    grid-area: purpleButtons;
+    grid-template-columns: repeat(2, 1fr);
 }
