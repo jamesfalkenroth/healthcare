@@ -8,10 +8,11 @@ let boundary; // place holder for the data
 let collected; // variable for turf.js collected points 
 let allPoints = []; // array for all the data points
 
-let many = L.featureGroup();
-let aFew = L.featureGroup();
-let none = L.featureGroup();
-let unsure = L.featureGroup();
+let below20 = L.featureGroup();
+let below40 = L.featureGroup();
+let below60 = L.featureGroup();
+let below80 = L.featureGroup();
+let above80 = L.featureGroup();
 
 // use the variables
 const map = L.map('the_map').setView(mapOptions.center, mapOptions.zoom);
@@ -25,10 +26,11 @@ let Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/r
 Esri_WorldGrayCanvas.addTo(map);
 
 let layers = {
-	"Many used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='green' /></svg>": many,
-	"A few used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": aFew,
-    "None used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": none,
-    "Unsure how many used <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": unsure
+	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='green' /></svg>": below20,
+	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below40,
+    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below60,
+    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below80,
+    "above80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": above80
 }
 
 let circleOptions = {
@@ -81,7 +83,7 @@ function addMarker(data){
     index++;
     // put all the turfJS points into `allPoints`
     allPoints.push(thisPoint)
-    if(data['How many FQHCs have you used before in your primary area of residence?'] == "Many"){
+    /*if(data['How many FQHCs have you used before in your primary area of residence?'] == "Many"){
         circleOptions.fillColor = "green"
         many.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>Many used</h2>`))
         }
@@ -96,7 +98,7 @@ function addMarker(data){
     else {
         circleOptions.fillColor = "gray"
         unsure.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>Unsure how many used</h2>`))
-    }
+    }*/
     return data
 };
 
@@ -114,12 +116,12 @@ function processData(results){
     results.data.forEach(data => {
         addMarker(data)
     })
-    many.addTo(map) // add our layers after markers have been made
+    /*many.addTo(map) // add our layers after markers have been made
     aFew.addTo(map) // add our layers after markers have been made  
     none.addTo(map) // add our layers after markers have been made
     unsure.addTo(map) // add our layers after markers have been made
     let allLayers = L.featureGroup([many,aFew,none,unsure]);
-    map.fitBounds(allLayers.getBounds());
+    map.fitBounds(allLayers.getBounds());*/
 
     // step 1: turn allPoints into a turf.js featureCollection
     thePoints = turf.featureCollection(allPoints)
@@ -184,8 +186,18 @@ function getBoundary(layer){
                 {
                     if (feature.properties.values.length > 0) {
                         let percent = getPercentage(feature)
-                        if(percent[0]>0.5){
+                        //Add feature to a given layer and assign it a color
+                        if(percent[0]<0.2){
                             return {color: "Blue",stroke: true, fillOpacity:0.5};
+                        }
+                        else if(percent[0]<0.4){
+                            return {color: "Green",stroke: true, fillOpacity:0.5};
+                        }
+                        else if(percent[0]<0.6){
+                            return {color: "Red",stroke: true, fillOpacity:0.5};
+                        }
+                        else if(percent[0]<0.8){
+                            return {color: "Yellow",stroke: true, fillOpacity:0.5};
                         }
                         else{
                             return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
