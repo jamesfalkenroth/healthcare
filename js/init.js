@@ -123,6 +123,14 @@ function processData(results){
     let allLayers = L.featureGroup([many,aFew,none,unsure]);
     map.fitBounds(allLayers.getBounds());*/
 
+    //below20.addTo(map) // add our layers after polygons have been made
+    /*below40.addTo(map)
+    below60.addTo(map)
+    below80.addTo(map)
+    above80.addTo(map)
+    let allLayers = L.featureGroup([below20,below40,below60,below80,above80]);
+    map.fitBounds(allLayers.getBounds());*/
+
     // step 1: turn allPoints into a turf.js featureCollection
     thePoints = turf.featureCollection(allPoints)
 
@@ -132,18 +140,23 @@ function processData(results){
 
 loadData(dataUrl)
 
+// function to open the survey in a new tab
+function openSurvey() {
+    window.open("https://docs.google.com/forms/d/e/1FAIpQLSfUnx5si5g-bz0nCHcXjXOBrcFNm0RvnTi1q4V9_GMs6p3SWQ/viewform?usp=sf_link", "_blank");
+}
+
 // sets survey to invisible
-document.getElementById("theSurvey").style.display = "none";
+// document.getElementById("theSurvey").style.display = "none";
 
 // function to hide and show the survey with a button
-function showSurvey() {
+/*function showSurvey() {
     var survey = document.getElementById("theSurvey");
     if (survey.style.display === "none") {
       survey.style.display = "block";
     } else {
       survey.style.display = "none";
     }
-}
+}*/
 
 // function for clicking on polygons
 function onEachFeature(feature, layer) {
@@ -186,20 +199,25 @@ function getBoundary(layer){
                 {
                     if (feature.properties.values.length > 0) {
                         let percent = getPercentage(feature)
-                        //Add feature to a given layer and assign it a color
+                        // Add feature to a given layer and assign it a color
                         if(percent[0]<0.2){
+                            //below20.addLayer();
                             return {color: "Blue",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.4){
+                            //below40.addLayer();
                             return {color: "Green",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.6){
+                            //below60.addLayer();
                             return {color: "Red",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.8){
+                            //below80.addLayer();
                             return {color: "Yellow",stroke: true, fillOpacity:0.5};
                         }
                         else{
+                            //above80.addLayer();
                             return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
                         }
                     }

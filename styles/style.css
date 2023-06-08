@@ -34,17 +34,37 @@ header{
 
 .main{
     grid-area: main_content;
-    grid-template-columns: 1.75fr 1fr;
-    grid-template-areas: "main_map content";
+    grid-template-columns: 1fr;
+    grid-template-areas: "main_map";
     display: grid;
 }
 
 #the_map{
     height:70vh;
     grid-area: main_map;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    display: grid;
 }
 
-#contents {
+#survey_button {
+    grid-area: surveybutton;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#story_area{
+    z-index: 9999;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    grid-row: 1;
+    grid-column: 4;
+}
+
+/*#contents {
     grid-area: content;
     display: grid;
     grid-template-rows: 1fr 3fr; 
@@ -64,46 +84,8 @@ header{
     margin-bottom: 10px;
 }
 
-#survey_button {
-    grid-area: surveybutton;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 #stories {
     grid-area: stories;
     margin-top: 10px;
     margin-bottom: 10px;
-}
-
-#placeForButtons{
-    grid-area: buttonHome;
-    display:grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-areas: "redButtons" "yellowButtons" "greenButtons" "blueButtons" "purpleButtons";
-}
-
-#placeForRedButtons{
-    grid-area: redButtons;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-#placeForYellowButtons{
-    grid-area: yellowButtons;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-#placeForGreenButtons{
-    grid-area: greenButtons;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-#placeForBlueButtons{
-    grid-area: blueButtons;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-#placeForPurpleButtons{
-    grid-area: purpleButtons;
-    grid-template-columns: repeat(2, 1fr);
-}
+}*/
