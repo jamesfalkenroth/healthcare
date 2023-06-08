@@ -33,12 +33,26 @@
                 among undergraduate students in the UCLA community in order to visualize potential areas of change for the community 
                 to better utilize FQHC resources.</p>
             <div id="survey_button" class="text">
-                <button onclick="showSurvey()">Share Your Story!</button>
+                <button onclick="openSurvey()">Share Your Story!</button>
             </div>
         </header>
-            <div class="main">
-                <div id="the_map"></div> 
-                <div id="contents">
+            
+        <div class="main">
+                <div id="the_map">
+                    <div id="story_area">
+                        <p>Click on a zip code area to show stories.</p>
+                    </div>
+                </div>
+                
+                <!-- if I delete this the polygons go away. why? -->
+                <div id="stories">
+                    <h3 class="text">User Experiences</h3>
+                    <p id="stories1" class="text"><strong>What was your experience in using the FQHCs in your primary area of residence?</strong></p>
+                    <p id="stories2" class="text"><strong>How has your access to health care has impacted your usage or awareness of FQHCs?</strong></p>
+                </div>
+                
+                
+                <!--<div id="contents">
                     <div id="sidebar">
                         <div id="theSurvey">
                             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfUnx5si5g-bz0nCHcXjXOBrcFNm0RvnTi1q4V9_GMs6p3SWQ/viewform?embedded=true" width="100%" height="600px" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
@@ -49,8 +63,7 @@
                             <p id="stories2" class="text"><strong>How has your access to health care has impacted your usage or awareness of FQHCs?</strong></p>
                         </div>
                     </div>
-                </div>  
-            </div>
+                </div>-->
         </div>
         <div id="footer" class="text">
             © 2023
