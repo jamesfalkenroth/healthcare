@@ -123,13 +123,14 @@ function processData(results){
     let allLayers = L.featureGroup([many,aFew,none,unsure]);
     map.fitBounds(allLayers.getBounds());*/
 
-    //below20.addTo(map) // add our layers after polygons have been made
+        //below20.addTo(map) // add our layers after polygons have been made
     /*below40.addTo(map)
     below60.addTo(map)
     below80.addTo(map)
     above80.addTo(map)
     let allLayers = L.featureGroup([below20,below40,below60,below80,above80]);
     map.fitBounds(allLayers.getBounds());*/
+
 
     // step 1: turn allPoints into a turf.js featureCollection
     thePoints = turf.featureCollection(allPoints)
@@ -159,7 +160,16 @@ function openSurvey() {
 }*/
 
 function changeTestimonials(e){
-    console.log(e)
+    let indices = e.target.feature.properties.values;
+    let testimonials = document.getElementById("testimonials");
+    testimonials.innerHTML = "";
+
+    for(i=0; i<indices.length; i++){
+        console.log(dataArray[indices[i]]);
+        testimonials.innerHTML += `${dataArray[indices[i]][4]}<br/><br/>`;
+    }
+    
+    //map.fitBounds(e.target.getBounds());
 }
 
 // function for clicking on polygons
@@ -206,25 +216,20 @@ function getBoundary(layer){
                 {
                     if (feature.properties.values.length > 0) {
                         let percent = getPercentage(feature)
-                        // Add feature to a given layer and assign it a color
+                        //Add feature to a given layer and assign it a color
                         if(percent[0]<0.2){
-                            //below20.addLayer();
                             return {color: "Blue",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.4){
-                            //below40.addLayer();
                             return {color: "Green",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.6){
-                            //below60.addLayer();
                             return {color: "Red",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.8){
-                            //below80.addLayer();
                             return {color: "Yellow",stroke: true, fillOpacity:0.5};
                         }
                         else{
-                            //above80.addLayer();
                             return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
                         }
                     }
