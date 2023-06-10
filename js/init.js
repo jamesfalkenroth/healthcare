@@ -158,8 +158,15 @@ function openSurvey() {
     }
 }*/
 
+function changeTestimonials(e){
+    console.log(e)
+}
+
 // function for clicking on polygons
 function onEachFeature(feature, layer) {
+    layer.on({
+        click: changeTestimonials
+    });
     if (feature.properties.values) {
         let percentages = getPercentage(feature)
         // count the values within the polygon by using .length on the values array created from turf.js collect
