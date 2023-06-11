@@ -232,19 +232,19 @@ function getBoundary(layer){
                         let percent = getPercentage(feature)
                         //Add feature to a given layer and assign it a color
                         if(percent[0]<0.2){
-                            return {color: "Blue",stroke: true, fillOpacity:0.5};
+                            return {color: "#eff3ff",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.4){
-                            return {color: "Green",stroke: true, fillOpacity:0.5};
+                            return {color: "#bdd7e7",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.6){
-                            return {color: "Red",stroke: true, fillOpacity:0.5};
+                            return {color: "#6baed6",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.8){
-                            return {color: "Yellow",stroke: true, fillOpacity:0.5};
+                            return {color: "#3182bd",stroke: true, fillOpacity:0.5};
                         }
                         else{
-                            return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
+                            return {color: "#08519c",stroke: true, fillOpacity:0.5};
                         }
                     }
                     else{
