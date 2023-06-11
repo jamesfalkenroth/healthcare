@@ -1,5 +1,5 @@
 // declare variables
-let mapOptions = {'center': [34.0709,-118.444],'zoom':12}
+let mapOptions = {'center': [34.0709,-118.444],'zoom':11}
 let index = 0;
 let dataArray = [];
 
@@ -26,11 +26,11 @@ var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/a
 Stadia_AlidadeSmoothDark.addTo(map);
 
 let layers = {
-	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='green' /></svg>": below20,
-	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below40,
-    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below60,
-    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below80,
-    "above80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": above80
+	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#eff3ff' /></svg>": below20,
+	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#bdd7e7' /></svg>": below40,
+    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#6baed6' /></svg>": below60,
+    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#3182bd' /></svg>": below80,
+    "above80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#08519c' /></svg>": above80
 }
 
 let circleOptions = {
