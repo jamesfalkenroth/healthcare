@@ -1,5 +1,5 @@
 // declare variables
-let mapOptions = {'center': [34.0709,-118.444],'zoom':12}
+let mapOptions = {'center': [34.0709,-118.444],'zoom':11}
 let index = 0;
 let dataArray = [];
 
@@ -26,11 +26,11 @@ var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/a
 Stadia_AlidadeSmoothDark.addTo(map);
 
 let layers = {
-	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='green' /></svg>": below20,
-	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below40,
-    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below60,
-    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": below80,
-    "above80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='red' /></svg>": above80
+	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#eff3ff' /></svg>": below20,
+	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#bdd7e7' /></svg>": below40,
+    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#6baed6' /></svg>": below60,
+    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#3182bd' /></svg>": below80,
+    "above80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#08519c' /></svg>": above80
 }
 
 let circleOptions = {
@@ -232,19 +232,19 @@ function getBoundary(layer){
                         let percent = getPercentage(feature)
                         //Add feature to a given layer and assign it a color
                         if(percent[0]<0.2){
-                            return {color: "Blue",stroke: true, fillOpacity:0.5};
+                            return {color: "#eff3ff",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.4){
-                            return {color: "Green",stroke: true, fillOpacity:0.5};
+                            return {color: "#bdd7e7",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.6){
-                            return {color: "Red",stroke: true, fillOpacity:0.5};
+                            return {color: "#6baed6",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.8){
-                            return {color: "Yellow",stroke: true, fillOpacity:0.5};
+                            return {color: "#3182bd",stroke: true, fillOpacity:0.5};
                         }
                         else{
-                            return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
+                            return {color: "#08519c",stroke: true, fillOpacity:0.5};
                         }
                     }
                     else{
