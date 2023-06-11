@@ -1,5 +1,5 @@
 // declare variables
-let mapOptions = {'center': [34.0709,-118.444],'zoom':10}
+let mapOptions = {'center': [34.0709,-118.444],'zoom':12}
 let index = 0;
 let dataArray = [];
 
@@ -18,12 +18,12 @@ let above80 = L.featureGroup();
 const map = L.map('the_map').setView(mapOptions.center, mapOptions.zoom);
 
 // set basemap
-let Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-	maxZoom: 16
+var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+	maxZoom: 20,
+	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
-Esri_WorldGrayCanvas.addTo(map);
+Stadia_AlidadeSmoothDark.addTo(map);
 
 let layers = {
 	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='green' /></svg>": below20,
@@ -162,11 +162,37 @@ function openSurvey() {
 function changeTestimonials(e){
     let indices = e.target.feature.properties.values;
     let testimonials = document.getElementById("testimonials");
-    testimonials.innerHTML = "";
+
+    if(indices.length>0){
+        testimonials.innerHTML = "";
+        //document.getElementById("story_area").style.height = 30vh;
+    }
+    else {
+        testimonials.innerHTML = "Click on a zip code area to show stories.";
+    }
 
     for(i=0; i<indices.length; i++){
         console.log(dataArray[indices[i]]);
-        testimonials.innerHTML += `${dataArray[indices[i]][4]}<br/><br/>`;
+        let value = dataArray[indices[i]][0];
+        if(value=='None' || value=='Unsure/Do not know') {
+            testimonials.innerHTML += `<i>FQHC Non-User</i><br/><br/>`
+        }
+        else if(value=='Many' || value=='A few') {
+            testimonials.innerHTML += `<i>FQHC User</i><br/><br/>`
+        }
+
+        let response3 = dataArray[indices[i]][3];
+        if(response3.length>5){
+            testimonials.innerHTML += `<strong>What was your experience in using the FQHCs in your primary area of residence?</strong><br/>`
+            testimonials.innerHTML += `${response3}<br/><br/>`;
+        }
+
+        let response4 = dataArray[indices[i]][4];
+        if(response4.length>5){
+            testimonials.innerHTML += `<strong>How has your access to health care impacted your usage or awareness of FQHCs?</strong><br/>`
+            testimonials.innerHTML += `${response4}<br/>`;
+        }
+        testimonials.innerHTML += `<br/><br/>`;
     }
     
     //map.fitBounds(e.target.getBounds());
@@ -218,19 +244,19 @@ function getBoundary(layer){
                         let percent = getPercentage(feature)
                         //Add feature to a given layer and assign it a color
                         if(percent[0]<0.2){
-                            return {color: "Blue",stroke: true, fillOpacity:0.5};
+                            return {color: "#eff3ff",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.4){
-                            return {color: "Green",stroke: true, fillOpacity:0.5};
+                            return {color: "#bdd7e7",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.6){
-                            return {color: "Red",stroke: true, fillOpacity:0.5};
+                            return {color: "#6baed6",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.8){
-                            return {color: "Yellow",stroke: true, fillOpacity:0.5};
+                            return {color: "#3182bd",stroke: true, fillOpacity:0.5};
                         }
                         else{
-                            return {color: "LightSkyBlue",stroke: true, fillOpacity:0.5};
+                            return {color: "#08519c",stroke: true, fillOpacity:0.5};
                         }
                     }
                     else{
