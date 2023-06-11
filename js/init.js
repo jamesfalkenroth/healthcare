@@ -1,5 +1,5 @@
 // declare variables
-let mapOptions = {'center': [34.0709,-118.444],'zoom':11}
+let mapOptions = {'center': [34.03303078948834, -118.36281980706895],'zoom':11}
 let index = 0;
 let dataArray = [];
 
@@ -42,21 +42,6 @@ let circleOptions = {
     fillOpacity: 0
 };
 
-// for coloring the polygon
-function getStyles(data){
-    let myStyle = {
-        "color": "#ff7800",
-        "weight": 1,
-        "opacity": .0,
-        "stroke": 0.5
-    };
-    if (data.properties.values.length > 0){
-        myStyle.opacity = 0
-        
-    }
-    return myStyle
-}
-
 function addMarker(data){
     // this is the value that will be incremented
     let howMany = data['How many FQHCs have you used before in your primary area of residence?']
@@ -69,24 +54,9 @@ function addMarker(data){
     dataArray.push([howMany, insurance, income, story, story2])
     let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{index})
     index++;
+
     // put all the turfJS points into `allPoints`
     allPoints.push(thisPoint)
-    /*if(data['How many FQHCs have you used before in your primary area of residence?'] == "Many"){
-        circleOptions.fillColor = "green"
-        many.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>Many used</h2>`))
-        }
-    else if(data['How many FQHCs have you used before in your primary area of residence?'] == "A few"){
-        circleOptions.fillColor = "yellow"
-        aFew.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>A few used</h2>`))
-    }
-    else if(data['How many FQHCs have you used before in your primary area of residence?'] == "None"){
-        circleOptions.fillColor = "red"
-        none.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>None used</h2>`))
-    }
-    else {
-        circleOptions.fillColor = "gray"
-        unsure.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>Unsure how many used</h2>`))
-    }*/
     return data
 };
 
@@ -104,21 +74,6 @@ function processData(results){
     results.data.forEach(data => {
         addMarker(data)
     })
-    /*many.addTo(map) // add our layers after markers have been made
-    aFew.addTo(map) // add our layers after markers have been made  
-    none.addTo(map) // add our layers after markers have been made
-    unsure.addTo(map) // add our layers after markers have been made
-    let allLayers = L.featureGroup([many,aFew,none,unsure]);
-    map.fitBounds(allLayers.getBounds());*/
-
-        //below20.addTo(map) // add our layers after polygons have been made
-    /*below40.addTo(map)
-    below60.addTo(map)
-    below80.addTo(map)
-    above80.addTo(map)
-    let allLayers = L.featureGroup([below20,below40,below60,below80,above80]);
-    map.fitBounds(allLayers.getBounds());*/
-
 
     // step 1: turn allPoints into a turf.js featureCollection
     thePoints = turf.featureCollection(allPoints)
@@ -134,19 +89,6 @@ function openSurvey() {
     window.open("https://docs.google.com/forms/d/e/1FAIpQLSfUnx5si5g-bz0nCHcXjXOBrcFNm0RvnTi1q4V9_GMs6p3SWQ/viewform?usp=sf_link", "_blank");
 }
 
-// sets survey to invisible
-// document.getElementById("theSurvey").style.display = "none";
-
-// function to hide and show the survey with a button
-/*function showSurvey() {
-    var survey = document.getElementById("theSurvey");
-    if (survey.style.display === "none") {
-      survey.style.display = "block";
-    } else {
-      survey.style.display = "none";
-    }
-}*/
-
 function changeTestimonials(e){
     let indices = e.target.feature.properties.values;
     let testimonials = document.getElementById("testimonials");
@@ -156,7 +98,7 @@ function changeTestimonials(e){
         //document.getElementById("story_area").style.height = 30vh;
     }
     else {
-        testimonials.innerHTML = "Click on a zip code area to show stories.";
+        testimonials.innerHTML = "Click on a zip code area to learn about Bruins' experiences with FQHCs.";
     }
 
     for(i=0; i<indices.length; i++){
@@ -172,13 +114,13 @@ function changeTestimonials(e){
         let response3 = dataArray[indices[i]][3];
         if(response3.length>5){
             testimonials.innerHTML += `<strong>What was your experience in using the FQHCs in your primary area of residence?</strong><br/>`
-            testimonials.innerHTML += `${response3}<br/><br/>`;
+            testimonials.innerHTML += `<br/>${response3}<br/><br/>`;
         }
 
         let response4 = dataArray[indices[i]][4];
         if(response4.length>5){
             testimonials.innerHTML += `<strong>How has your access to health care impacted your usage or awareness of FQHCs?</strong><br/>`
-            testimonials.innerHTML += `${response4}<br/>`;
+            testimonials.innerHTML += `<br/>${response4}<br/>`;
         }
         testimonials.innerHTML += `<br/><hr><br/>`;
     }

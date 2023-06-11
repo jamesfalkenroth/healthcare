@@ -11,11 +11,17 @@ header{
     grid-area: header;
     align-self: center;
     font-family: sans-serif;
-    height: 25vh;
+    height: 32vh;
     font-size:medium;
     text-align: left;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     margin-left: 20px;
+    margin-right: 150px;
+}
+
+#map_title {
+    text-align: left;
+    margin-left: 225px;
 }
 
 #footer{
@@ -35,11 +41,12 @@ header{
 #the_map{
     height:70vh;
     grid-area: main_map;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-template-rows: repeat(4, minmax(0, 1fr));
     align-items: center;
     justify-items: center;
     display: grid;
+    border-radius: 7px;
 }
 
 #survey_button {
@@ -52,7 +59,7 @@ header{
 
 #button_link{
     vertical-align: middle;
-    background: transparent;
+    background-color: transparent;
 	border: 2px solid black;
 	border-radius: 5px;
 	margin: 0.5rem;
@@ -60,11 +67,12 @@ header{
 	cursor: pointer;
 	padding: 0.5rem 1rem;
 	font-size: 1rem;
-	transition: transform 0.2s;
 }
 
-button:hover {
+#button_link:hover {
 	transform: scale(1.05);
+    background-color: #bdd7e7;
+    transition: 0.2s;
 }
 
 #story_area{
@@ -72,15 +80,18 @@ button:hover {
     background-color: white;
     overflow: scroll;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 0px;
     height: 60vh;
 }
 
 #legend{
     z-index: 9999;
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(255, 255, 255);
+    opacity: 0.85;
+    border-radius: 7px;
     padding: 10px;
     position: relative;
+    margin-top: 15px;
     grid-row: 1;
     grid-column: 1;
 }
