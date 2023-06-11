@@ -180,7 +180,7 @@ function changeTestimonials(e){
             testimonials.innerHTML += `<strong>How has your access to health care impacted your usage or awareness of FQHCs?</strong><br/>`
             testimonials.innerHTML += `${response4}<br/>`;
         }
-        testimonials.innerHTML += `<br/><br/>`;
+        testimonials.innerHTML += `<br/><hr><br/>`;
     }
     
     //map.fitBounds(e.target.getBounds());
