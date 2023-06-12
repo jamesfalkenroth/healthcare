@@ -6,7 +6,7 @@ Our technology provides a platform for the UCLA community to share stories and e
 
 ### Technology Used
 
-In our project, we used HTML to create a framework for our website, CSS to style our design, and JavaScript to add functionality to our html elements. We incorporated the JavaScript packages Leaflet.js [Leaflet.js](https://leafletjs.com/) and [turf.js](https://turfjs.org/) to add functional maps which helped to support our goal to visuallly represent community stories. We collected survey information through a Google Form embedded in our website, and we analyzed data from automatically generated Google Sheets using Google Scripts to Geocode the latitude and longitude coordinates from submitted locations.
+In our project, we used HTML to create a framework for our website, CSS to style our design, and JavaScript to add functionality to our html elements. We incorporated the JavaScript packages [Leaflet.js](https://leafletjs.com/) and [turf.js](https://turfjs.org/) to add functional maps which helped to support our goal to visuallly represent community stories. We collected survey information through a Google Form embedded in our website, and we analyzed data from automatically generated Google Sheets using Google Scripts to Geocode the latitude and longitude coordinates from submitted locations.
 
 ### Future Applications
 
