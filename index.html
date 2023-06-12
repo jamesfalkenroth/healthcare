@@ -18,6 +18,9 @@
 
         <!-- Adding the TurfJs library  -->
         <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
+
+        <!-- Adding the ChartJs library  -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         
     </head>
 
@@ -32,8 +35,8 @@
                 low-income and underserved populations. Through our survey, we aim to measure the awareness and use of FQHCs 
                 among undergraduate students in the UCLA community in order to visualize potential areas of change for the community 
                 to better utilize FQHC resources.
-                <br><br>The map below shows student stories about FQHCs based on their home zip code. Click the button to take our survey and share your own experiences!
-                <br><br>
+                <br/><br/>The map below shows student stories about FQHCs based on their home zip code. Click the button to take our survey and share your own experiences!
+                <br/><br/>
             </p>
             <h2 id="map_title" class="text">Usage Rate of FQHCs by UCLA Students</h2>
         </header>
@@ -65,6 +68,9 @@
                 <div id="survey_button" class="text">
                     <button id="button_link" onclick="openSurvey()">Share Your Story!</button>
                     <hr><br/>
+                </div>
+                <div id="chartSpace">
+                    <canvas id="myChart"></canvas>
                 </div>
                 <div id="story_area">
                     <p id="testimonials">Click on a zip code area to learn about Bruins' experiences with FQHCs.</p>

@@ -14,6 +14,31 @@ let below60 = L.featureGroup();
 let below80 = L.featureGroup();
 let above80 = L.featureGroup();
 
+const ctx = document.getElementById('myChart');
+
+let chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+chart.destroy();
+
+document.getElementById('chartSpace').style.height = 0;
+
+
 // use the variables
 const map = L.map('the_map').setView(mapOptions.center, mapOptions.zoom);
 
@@ -94,35 +119,39 @@ function changeTestimonials(e){
     let testimonials = document.getElementById("testimonials");
 
     if(indices.length>0){
-        testimonials.innerHTML = "";
-        //document.getElementById("story_area").style.height = 30vh;
+        testimonials.innerHTML = `<hr><strong>Testimonials<strong><br/><br/>`;
+        addChart(indices);
     }
     else {
         testimonials.innerHTML = "Click on a zip code area to learn about Bruins' experiences with FQHCs.";
+        document.getElementById('chartSpace').style.height = 0;
     }
 
     for(i=0; i<indices.length; i++){
         console.log(dataArray[indices[i]]);
         let value = dataArray[indices[i]][0];
-        if(value=='None' || value=='Unsure/Do not know') {
-            testimonials.innerHTML += `<i>FQHC Non-User</i><br/><br/>`
-        }
-        else if(value=='Many' || value=='A few') {
-            testimonials.innerHTML += `<i>FQHC User</i><br/><br/>`
-        }
-
         let response3 = dataArray[indices[i]][3];
-        if(response3.length>5){
-            testimonials.innerHTML += `<strong>What was your experience in using the FQHCs in your primary area of residence?</strong><br/>`
-            testimonials.innerHTML += `<br/>${response3}<br/><br/>`;
-        }
-
         let response4 = dataArray[indices[i]][4];
-        if(response4.length>5){
-            testimonials.innerHTML += `<strong>How has your access to health care impacted your usage or awareness of FQHCs?</strong><br/>`
-            testimonials.innerHTML += `<br/>${response4}<br/>`;
+
+        if(response3.length>5 || response4.length>5){
+            if(value=='None' || value=='Unsure/Do not know') {
+                testimonials.innerHTML += `<i>FQHC Non-User</i><br/><br/>`
+            }
+            else if(value=='Many' || value=='A few') {
+                testimonials.innerHTML += `<i>FQHC User</i><br/><br/>`
+            }
+
+            if(response3.length>5){
+                testimonials.innerHTML += `<strong>What was your experience in using the FQHCs in your primary area of residence?</strong><br/>`
+                testimonials.innerHTML += `<br/>${response3}<br/><br/>`;
+            }
+
+            if(response4.length>5){
+                testimonials.innerHTML += `<strong>How has your access to health care impacted your usage or awareness of FQHCs?</strong><br/>`
+                testimonials.innerHTML += `<br/>${response4}<br/>`;
+            }
+            testimonials.innerHTML += `<br/><hr><br/>`;
         }
-        testimonials.innerHTML += `<br/><hr><br/>`;
     }
     
     //map.fitBounds(e.target.getBounds());
@@ -150,6 +179,32 @@ function onEachFeature(feature, layer) {
             layer.bindPopup(`<strong>${name}</strong><br/>FQHC Usage Rate: ${text}<br/>Low Income: ${incomeText}<br/>Without Health Insurance: ${insureText}`); //bind the pop up to the number
         }
     }
+}
+
+function addChart(indices){
+    let num = numUsers(indices);
+    chart.destroy();
+    chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+                labels: ['FQHC Users', 'FQHC Non-Users'],
+                datasets: [{
+                label: '# of Respondents',
+                data: [num[0], [num[1]]],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                beginAtZero: true
+                }
+            }
+        }
+      });
+      
+    document.getElementById('chartSpace').style.height = "30vh";
 }
 
 // new function to get the boundary layer and add data to it with turf.js
@@ -238,4 +293,24 @@ function getPercentage(feature){
     }
     let percentage = [user/(user+nonUser),lowIncome/(lowIncome+notLowIncome),uninsured/(insured+uninsured)];
     return percentage;
+}
+
+function numUsers(indices){
+    let user = 0;
+    let nonUser = 0;
+
+    for(i=0; i<indices.length; i++){
+        value = dataArray[indices[i]][0];
+
+        if(value=='Many' || value=='A few') {
+            user++;
+            console.log(dataArray[indices[i]][0])
+        }
+        else if(value=='None' || value=='Unsure/Do not know') {
+            nonUser++;
+            console.log(dataArray[indices[i]][0])
+        }
+    }
+
+    return [user, nonUser];
 }

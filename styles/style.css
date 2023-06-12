@@ -11,7 +11,7 @@ header{
     grid-area: header;
     align-self: center;
     font-family: sans-serif;
-    height: 32vh;
+    height: auto;
     font-size:medium;
     text-align: left;
     margin-bottom: 15px;
@@ -39,7 +39,7 @@ header{
 }
 
 #the_map{
-    height:70vh;
+    height:90vh;
     grid-area: main_map;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-template-rows: repeat(4, minmax(0, 1fr));
@@ -81,7 +81,16 @@ header{
     overflow: scroll;
     margin-left: 10px;
     margin-right: 0px;
-    height: 60vh;
+    height: 50vh;
+    font-size: smaller;
+}
+
+#chartSpace{
+    grid-area: charts;
+    background-color: white;
+    overflow: scroll;
+    margin-left: 10px;
+    margin-right: 0px;
 }
 
 #legend{
@@ -100,5 +109,5 @@ header{
     grid-area: content;
     background-color: white;
     grid-template-rows: auto auto;
-    grid-template-areas: "surveybuttons story"
+    grid-template-areas: "surveybuttons charts story"
 }
