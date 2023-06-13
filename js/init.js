@@ -18,23 +18,22 @@ let above80 = L.featureGroup();
 const ctx = document.getElementById('myChart');
 
 let chart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
+    type: 'pie',
+    data: {
+            labels: ['FQHC Users', 'FQHC Non-Users'],
+            datasets: [{
+            label: '# of Respondents',
+            data: [1, 1],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+
+        }
     }
-  }
-});
+  });
 chart.destroy();
 
 document.getElementById('chartSpace').style.height = 0;
@@ -198,9 +197,7 @@ function addChart(indices){
         options: {
             responsive: true,
             scales: {
-                y: {
-                beginAtZero: true
-                }
+
             }
         }
       });
