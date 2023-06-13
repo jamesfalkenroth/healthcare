@@ -29,6 +29,7 @@ header{
     margin-right: 150px;
 }
 
+
 #map_title {
     text-align: left;
     margin-left: 225px;
@@ -129,4 +130,23 @@ header{
     background-color: white;
     grid-template-rows: auto auto;
     grid-template-areas: "surveybuttons charts story"
+}
+  
+.navbar {
+    display: flex;
+    align-items: center;
+    color: white;
+    
+    border-radius: 7px;
+  }
+
+.navbar-links a {
+    text-align: left;
+    color: #08519c;
+}
+
+.menu {
+    display: flex;
+    gap: 10em;
+    font-size: 18px;
 }
