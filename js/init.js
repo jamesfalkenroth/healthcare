@@ -74,7 +74,9 @@ function addMarker(data){
     let story2 = data['Do you feel your access to health care has impacted your usage or awareness of FQHCs?']
 
     // create the turfJS point
-    dataArray.push([howMany, insurance, income, story, story2])
+    dataArray.push([howMany, insurance, income, story, story2, data['Timestamp']])
+    console.log(data['Timestamp']);
+    console.log(index);
     let thisPoint = turf.point([Number(data.lng),Number(data.lat)],{index})
     index++;
 
@@ -114,6 +116,9 @@ function openSurvey() {
 
 function changeTestimonials(e){
     let indices = e.target.feature.properties.values;
+    //sorts array based on average length of responses corresponding to each index in dataArray
+    indices = indices.sort(function (a, b) {  return a - b;  });
+    console.log(indices);
     let testimonials = document.getElementById("testimonials");
 
     if(indices.length>0){
@@ -126,7 +131,8 @@ function changeTestimonials(e){
     }
 
     for(i=0; i<indices.length; i++){
-        console.log(dataArray[indices[i]]);
+        let timestamp = dataArray[indices[i]][5];
+        console.log(timestamp);
         let value = dataArray[indices[i]][0];
         let response3 = dataArray[indices[i]][3];
         let response4 = dataArray[indices[i]][4];
@@ -149,6 +155,8 @@ function changeTestimonials(e){
                 testimonials.innerHTML += `<br/>${response4}<br/>`;
             }
             testimonials.innerHTML += `<br/><hr><br/>`;
+            //console.log(timestamp);
+            //console.log(testimonials.innerHTML);
         }
     }
     
