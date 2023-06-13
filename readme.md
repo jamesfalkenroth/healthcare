@@ -53,6 +53,6 @@ The survey button allows users to share their own stories by filling out our sur
 The pie chart visually displays the proportion of FQHC users in a region
 
 ### Testimonials
-![Testimonials](./img/testimonials2.png)
+![Testimonials](./img/testimonials3.png)
 
 For community members in each region, stories on FQHCs and healthcare access are displayed.

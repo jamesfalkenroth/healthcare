@@ -122,7 +122,7 @@ function changeTestimonials(e){
     let testimonials = document.getElementById("testimonials");
 
     if(indices.length>0){
-        testimonials.innerHTML = `<hr><strong>Testimonials<strong><br/><br/>`;
+        testimonials.innerHTML = `<hr><strong><font size="+1">Testimonials</font><strong><br/><br/>`;
         addChart(indices);
     }
     else {
@@ -183,7 +183,7 @@ function onEachFeature(feature, layer) {
         let name = feature.properties.zcta;
         let respondents = feature.properties.values.length;
         if(feature.properties.values.length>0) {
-            layer.bindPopup(`<strong><font size="+1">${name}</font></strong><hr># of Respondents: ${respondents}<br/><br/>FQHC Usage Rate: ${text}<br/>Low Income: ${incomeText}<br/>Without Health Insurance: ${insureText}`); //bind the pop up to the number
+            layer.bindPopup(`<strong><font size="+1">${name}</font></strong><hr><strong># of Respondents:</strong> ${respondents}<br/><br/><strong>FQHC Usage Rate:</strong> ${text}<br/><strong>Low Income:</strong> ${incomeText}<br/><strong>Without Health Insurance:</strong> ${insureText}`); //bind the pop up to the number
         }
     }
 }
