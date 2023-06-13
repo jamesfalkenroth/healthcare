@@ -27,15 +27,15 @@ For future projects, our project could be expanded to different or larger target
 
 ## Features
 
-![Map](./img/map.png)
+![Map](./img/map2.png)
 
 Our map highlight zip codes based on levels of FQHC usage in user responses.
 
-![Pop-Up](./img/popup.png)
+![Pop-Up](./img/popup2.png)
 
 When users select any highlighted region on the map, a pop-up appears highlighting FQHC usage rate, health insurance demographics, and low-income rate corresponding to that region.
 
-![Legend](./img/legend.png)
+![Legend](./img/legend2.png)
 
 The legend defines the range of FQHC usage rates corresponding to each color on the map.
 
