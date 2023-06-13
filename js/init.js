@@ -155,8 +155,6 @@ function changeTestimonials(e){
                 testimonials.innerHTML += `<br/>${response4}<br/>`;
             }
             testimonials.innerHTML += `<br/><hr><br/>`;
-            //console.log(timestamp);
-            //console.log(testimonials.innerHTML);
         }
     }
     
@@ -183,8 +181,9 @@ function onEachFeature(feature, layer) {
         let insureText = uninsuredPerc.toString() + "%";
 
         let name = feature.properties.zcta;
+        let respondents = feature.properties.values.length;
         if(feature.properties.values.length>0) {
-            layer.bindPopup(`<strong>${name}</strong><br/>FQHC Usage Rate: ${text}<br/>Low Income: ${incomeText}<br/>Without Health Insurance: ${insureText}`); //bind the pop up to the number
+            layer.bindPopup(`<strong><font size="+1">${name}</font></strong><hr># of Respondents: ${respondents}<br/><br/>FQHC Usage Rate: ${text}<br/>Low Income: ${incomeText}<br/>Without Health Insurance: ${insureText}`); //bind the pop up to the number
         }
     }
 }
@@ -268,6 +267,7 @@ function getPercentage(feature){
     let notLowIncome = 0;
     let insured = 0;
     let uninsured = 0;
+
     for(i=0; i<feature.properties.values.length; i++){
         console.log(feature.properties);
         value = dataArray[feature.properties.values[i]][0];
