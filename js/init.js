@@ -7,6 +7,7 @@ const boundaryLayer ="ca_zipcodes.geojson"
 let boundary; // place holder for the data
 let collected; // variable for turf.js collected points 
 let allPoints = []; // array for all the data points
+let geojson; // place holder for the geojson file we will create
 
 let below20 = L.featureGroup();
 let below40 = L.featureGroup();
@@ -160,7 +161,9 @@ function changeTestimonials(e){
 // function for clicking on polygons
 function onEachFeature(feature, layer) {
     layer.on({
-        click: changeTestimonials
+        click: changeTestimonials,
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
     });
     if (feature.properties.values) {
         let percentages = getPercentage(feature)
@@ -223,7 +226,7 @@ function getBoundary(layer){
                 // collected = turf.buffer(thePoints, 50,{units:'miles'});
 
                 // here is the geoJson of the `collected` result:
-                L.geoJson(collected,{onEachFeature: onEachFeature,style:function(feature)
+                geojson = L.geoJson(collected,{onEachFeature: onEachFeature,style:function(feature)
                 {
                     if (feature.properties.values.length > 0) {
                         let percent = getPercentage(feature)
@@ -245,8 +248,8 @@ function getBoundary(layer){
                         }
                     }
                     else{
-                        // make the polygon gray and blend in with basemap if it doesn't have any values
-                        return{opacity:0,color:"#efefef"}
+                        // make the polygon blend in with basemap if it doesn't have any values
+                        return{opacity:0,color:"transparent"}
                     }
                 }
                 // add the geojson to the map
@@ -313,4 +316,21 @@ function numUsers(indices){
     }
 
     return [user, nonUser];
+}
+
+// sets style on hover
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 6,
+        fillOpacity: 0.75
+    });
+
+    layer.bringToFront();
+}
+
+// resets style after hover
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
 }

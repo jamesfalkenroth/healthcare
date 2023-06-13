@@ -1,10 +1,20 @@
 body{
     display: grid;
     grid-template-rows: auto auto auto;
-    grid-template-areas: "header" "main_content" "footer";
+    grid-template-areas: "header" "map_title_box" "main_content" "footer";
     background-color: white;
     font-family: Arial, Helvetica, sans-serif, sans-serif;
     gap: 10px;
+}
+
+h1 {
+    color : #08519c;
+}
+
+#title_logo {
+    display: grid;
+    grid-template-columns: 1fr 11fr;
+    margin-top: 15px;
 }
 
 header{
@@ -14,7 +24,7 @@ header{
     height: auto;
     font-size:medium;
     text-align: left;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     margin-left: 20px;
     margin-right: 150px;
 }
@@ -22,6 +32,13 @@ header{
 #map_title {
     text-align: left;
     margin-left: 225px;
+    color: white;
+}
+
+#map_title_box {
+    height: auto;
+    width: 100%;
+    background-color: #08519c;
 }
 
 #footer{
@@ -41,8 +58,8 @@ header{
 #the_map{
     height:90vh;
     grid-area: main_map;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    grid-template-rows: repeat(6, minmax(0, 1fr));
     align-items: center;
     justify-items: center;
     display: grid;
@@ -71,7 +88,8 @@ header{
 
 #button_link:hover {
 	transform: scale(1.05);
-    background-color: #bdd7e7;
+    color: white;
+    background-color: #08519c;
     transition: 0.2s;
 }
 
@@ -100,8 +118,9 @@ header{
     border-radius: 7px;
     padding: 10px;
     position: relative;
-    margin-top: 15px;
-    grid-row: 1;
+    margin-left: 8px;
+    margin-bottom: 50px;
+    grid-row: 2;
     grid-column: 1;
 }
 
