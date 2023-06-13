@@ -50,10 +50,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 let layers = {
-	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#eff3ff' /></svg>": below20,
-	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#bdd7e7' /></svg>": below40,
-    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#6baed6' /></svg>": below60,
-    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#3182bd' /></svg>": below80,
+	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#9ecae1' /></svg>": below20,
+	"below40 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#6baed6' /></svg>": below40,
+    "below60 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#4292c6' /></svg>": below60,
+    "below80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#2171b5' /></svg>": below80,
     "above80 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#08519c' /></svg>": above80
 }
 
@@ -230,16 +230,16 @@ function getBoundary(layer){
                         let percent = getPercentage(feature)
                         //Add feature to a given layer and assign it a color
                         if(percent[0]<0.2){
-                            return {color: "#eff3ff",stroke: true, fillOpacity:0.5};
+                            return {color: "#9ecae1",stroke: true, fillOpacity:0.5};
                         }
                         else if(percent[0]<0.4){
-                            return {color: "#bdd7e7",stroke: true, fillOpacity:0.5};
-                        }
-                        else if(percent[0]<0.6){
                             return {color: "#6baed6",stroke: true, fillOpacity:0.5};
                         }
+                        else if(percent[0]<0.6){
+                            return {color: "#4292c6",stroke: true, fillOpacity:0.5};
+                        }
                         else if(percent[0]<0.8){
-                            return {color: "#3182bd",stroke: true, fillOpacity:0.5};
+                            return {color: "#2171b5",stroke: true, fillOpacity:0.5};
                         }
                         else{
                             return {color: "#08519c",stroke: true, fillOpacity:0.5};
