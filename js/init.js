@@ -44,12 +44,12 @@ document.getElementById('chartSpace').style.height = 0;
 const map = L.map('the_map').setView(mapOptions.center, mapOptions.zoom);
 
 // set basemap
-var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
 	maxZoom: 20,
 	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
-Stadia_AlidadeSmoothDark.addTo(map);
+Stadia_AlidadeSmooth.addTo(map)
 
 let layers = {
 	"below20 <svg height='10' width='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='1' fill='#eff3ff' /></svg>": below20,
