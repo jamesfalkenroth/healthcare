@@ -131,22 +131,43 @@ header{
     grid-template-rows: auto auto;
     grid-template-areas: "surveybuttons charts story"
 }
-  
-.navbar {
-    display: flex;
-    align-items: center;
+
+#contact{
+    background-color: #08519c;
     color: white;
-    
-    border-radius: 7px;
+    border-radius: 50px;
   }
 
-.navbar-links a {
-    text-align: left;
-    color: #08519c;
-}
-
-.menu {
-    display: flex;
-    gap: 10em;
-    font-size: 18px;
-}
+  nav
+  {
+      height: 200px;
+      position: absolute;
+      top: 0px;
+      right: 5%;
+      text-align: right;
+  }
+  
+  nav ul#main_menu
+  {
+      list-style-type: none;  
+      bottom: 0px;
+      right: 5%;
+      z-index: 400;
+      text-align: right;
+  }
+  
+  nav ul#main_menu li
+  {
+      display: inline;
+  }
+  
+  nav ul#main_menu li a
+  {
+      padding: 15px 15px;
+      color: #08519c;
+      font-size: 18px;
+      font-weight: 800;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+  }
