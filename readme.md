@@ -31,7 +31,7 @@ For future projects, our project could be expanded to different or larger target
 
 Our map highlight zip codes based on levels of FQHC usage in user responses.
 
-![Pop-Up](./img/popup2.png)
+![Pop-Up](./img/popup3.png)
 
 When users select any highlighted region on the map, a pop-up appears highlighting FQHC usage rate, health insurance demographics, and low-income rate corresponding to that region.
 
@@ -43,10 +43,10 @@ The legend defines the range of FQHC usage rates corresponding to each color on 
 
 The survey button allows users to share their own stories by filling out our survey.
 
-![Pie Chart](./img/chart.png)
+![Pie Chart](./img/chart2.png)
 
 The pie chart visually displays the proportion of FQHC users in a region
 
-![Testimonials](./img/testimonials.png)
+![Testimonials](./img/testimonials2.png)
 
 For community members in each region, stories on FQHCs and healthcare access are displayed.
